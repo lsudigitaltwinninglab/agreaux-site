@@ -399,6 +399,7 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; letter-spacin
 .callout strong { color: var(--text); }
 .callout a { color: var(--accent); }
 .callout-warn { background: rgba(255, 204, 102, 0.06); border-left-color: var(--warn); }
+.repo-notice { position: relative; text-align: left; max-width: 560px; margin: 0 auto 24px; }
 
 .doc-table { width: 100%; border-collapse: collapse; margin: 8px 0 16px; font-size: 0.92rem; }
 .doc-table th, .doc-table td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--border-soft); }
