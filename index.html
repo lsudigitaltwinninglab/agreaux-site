@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agreaux — Open-Source Digital Twin Framework for Heavy Industry</title>
+  <meta name="description" content="Agreaux is an open-source framework for building low-cost VR/AR digital twins of industrial facilities using Blender, Godot and low-cost LiDAR — by the LSU Digital Twinning Lab." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">Agr<span>eaux</span></span>
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#features">Features</a>
+        <a href="#capture">Capture</a>
+        <a href="#pipeline">Pipeline</a>
+        <a href="docs.html">Docs</a>
+        <a class="btn btn-ghost" href="https://github.com/lsudigitaltwinninglab/agreaux" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-primary" href="#download">Download</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="container hero-content">
+      <span class="eyebrow">Open-source · Low-cost · Interoperable</span>
+      <h1 class="hero-title">
+        Digital twins for industrial manufacturing<br />
+        <span class="gradient-text">using free software &amp; low-cost hardware.</span>
+      </h1>
+      <p class="hero-sub">
+        Agreaux is a modular framework that connects <strong>free, open-source software</strong> and
+        <strong>low-cost hardware</strong> into one interoperable pipeline — turning a real plant into
+        an interactive 3D digital twin you can explore in virtual and augmented reality. We build the
+        bridges between tools like Blender, Godot and CloudCompare so they work together, at a fraction
+        of traditional engineering cost.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" href="#download">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+          Get the framework
+        </a>
+        <a class="btn btn-ghost btn-lg" href="docs.html">
+          Read the docs
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">5–10×</span><span class="stat-label">lower cost vs. traditional</span></div>
+        <div class="stat"><span class="stat-num">&lt;$5k</span><span class="stat-label">total hardware</span></div>
+        <div class="stat"><span class="stat-num">100%</span><span class="stat-label">open-source toolchain</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tools strip -->
+  <section class="strip">
+    <div class="container strip-inner">
+      <span class="strip-label">Built on a modular open toolchain</span>
+      <div class="strip-tools">
+        <span>Blender</span><span class="dot">·</span>
+        <span>Godot</span><span class="dot">·</span>
+        <span>CloudCompare</span><span class="dot">·</span>
+        <span>OpenXR</span><span class="dot">·</span>
+        <span>Meta Quest 3</span><span class="dot">·</span>
+        <span>Low-cost LiDAR</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Capabilities</span>
+        <h2>Everything you need to bring a plant to life</h2>
+        <p>A complete pipeline from raw scan data to an interactive, immersive twin — with the
+          collaboration and analysis features industrial teams actually need.</p>
+      </div>
+
+      <div class="features-grid">
+        <article class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 7l10-5 10 5-10 5L2 7z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>VR, AR &amp; toy-model modes</h3>
+          <p>Walk the facility at 1:1 scale in VR, shrink it to a tabletop "toy model," or overlay it
+            onto the real equipment in AR passthrough — all from a single Godot project on Meta Quest 3.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 20c0-2 .8-3.6 2-4.6"/></svg>
+          </div>
+          <h3>Multiplayer with QR anchors</h3>
+          <p>Multiple users share one networked session over ENet. A QR-code spatial anchor pins the
+            model to the same real-world spot for everyone, so co-located users see it aligned in the room.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 8h10M7 12h6M7 16h8"/></svg>
+          </div>
+          <h3>P&amp;ID with pointer interactions</h3>
+          <p>Pull up Piping &amp; Instrumentation Diagrams in-world and point at hotspots to surface
+            linked metadata and highlight the matching equipment in the 3D model.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l3 6 6 .9-4.5 4.3 1 6.3L12 17l-5.5 2.5 1-6.3L3 8.9 9 8z"/></svg>
+          </div>
+          <h3>Guided modeling from scans</h3>
+          <p>Custom Blender add-ons — <strong>Point Cloud Visualizer</strong> and <strong>Plant
+            Modeling Tools</strong> — plus Geometry Nodes turn scaled point clouds into clean,
+            instanced, game-ready geometry fast.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v5h-5"/></svg>
+          </div>
+          <h3>Metadata &amp; process data</h3>
+          <p>Equipment IDs, ratings and contents travel with the model via a metadata manager, ready to
+            display on point-and-click and to extend toward live process-data integration.</p>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <h3>Interactive training tools</h3>
+          <p>Move through the unit with walkable ramps and ladder movement, draw annotations in 3D
+            space, and toggle equipment categories — built for safe, repeatable operator training.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Capture / LiDAR -->
+  <section class="section section-alt" id="capture">
+    <div class="container split">
+      <div class="split-text">
+        <span class="eyebrow">Site capture</span>
+        <h2>Scan a whole unit with accessible hardware</h2>
+        <p>You don't need a survey crew or six-figure rig. Agreaux is designed around accessible
+          capture devices and free reconstruction tools, so a small team can digitize a complex
+          process unit and keep the digital model a true 1:1 reference.</p>
+        <ul class="check-list">
+          <li><strong>Low-cost LiDAR scanners</strong> — affordable handhelds like the Eagle scanner give an accurate 1:1 laser reference.</li>
+          <li><strong>Photogrammetry</strong> — any camera (even a phone) adds high-detail geometry and texture.</li>
+          <li><strong>Registration &amp; export</strong> — line up overlapping scans in CloudCompare or RealityScan.</li>
+          <li><strong>Control points</strong> — shared reference points keep scale and orientation accurate.</li>
+        </ul>
+        <a class="btn btn-ghost" href="docs.html#capture">Capture overview
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
+        </a>
+      </div>
+      <div class="split-visual">
+        <div class="scan-card">
+          <div class="scan-dots" aria-hidden="true"></div>
+          <div class="scan-lines" aria-hidden="true"></div>
+          <div class="scan-badges">
+            <span class="badge">Eagle LiDAR</span>
+            <span class="badge">Photogrammetry</span>
+            <span class="badge">CloudCompare</span>
+            <span class="badge">1:1 point cloud</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pipeline -->
+  <section class="section" id="pipeline">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">The pipeline</span>
+        <h2>A modular, fully open-source workflow</h2>
+        <p>Five stages, each a swappable module built on free software. Use the whole pipeline or drop
+          individual pieces into your existing process.</p>
+      </div>
+      <div class="stack-grid">
+        <div class="stack-item">
+          <span class="stack-step">01</span>
+          <h3>Capture</h3>
+          <p class="stack-tools">Low-cost LiDAR · Photogrammetry · Camera</p>
+          <p>Scan the site and collect reference photos on location.</p>
+        </div>
+        <div class="stack-arrow" aria-hidden="true">→</div>
+        <div class="stack-item">
+          <span class="stack-step">02</span>
+          <h3>Register</h3>
+          <p class="stack-tools">CloudCompare · RealityScan</p>
+          <p>Align overlapping scans and export a scaled point cloud.</p>
+        </div>
+        <div class="stack-arrow" aria-hidden="true">→</div>
+        <div class="stack-item">
+          <span class="stack-step">03</span>
+          <h3>Model</h3>
+          <p class="stack-tools">Blender · Add-ons · Geometry Nodes</p>
+          <p>Model 1:1 over the cloud into optimized, instanced assets.</p>
+        </div>
+        <div class="stack-arrow" aria-hidden="true">→</div>
+        <div class="stack-item">
+          <span class="stack-step">04</span>
+          <h3>Export</h3>
+          <p class="stack-tools">glTF 2.0 (.glb) · .blend</p>
+          <p>Hand off game-ready models straight into the engine.</p>
+        </div>
+        <div class="stack-arrow" aria-hidden="true">→</div>
+        <div class="stack-item">
+          <span class="stack-step">05</span>
+          <h3>Deploy</h3>
+          <p class="stack-tools">Godot · OpenXR · Meta Quest 3</p>
+          <p>Ship the interactive VR/AR multiplayer twin.</p>
+        </div>
+      </div>
+      <p class="pipeline-note">Want the diagrams and architecture? <a href="docs.html#architecture">See the documentation →</a></p>
+    </div>
+  </section>
+
+  <!-- Download -->
+  <section class="section section-alt download-section" id="download">
+    <div class="container">
+      <div class="download-card">
+        <div class="download-glow" aria-hidden="true"></div>
+        <span class="eyebrow">Get the code</span>
+        <h2>Download the framework</h2>
+        <p>Clone the repository to get the full Godot project, the Blender add-ons, example scenes and
+          the documentation. Open it in Godot and the demo twin is ready to run.</p>
+        <div class="code-block">
+          <code><span class="c-comment"># Clone the repository</span><br />
+          git clone https://github.com/lsudigitaltwinninglab/agreaux.git<br />
+          cd agreaux</code>
+          <button class="copy-btn" data-copy="git clone https://github.com/lsudigitaltwinninglab/agreaux.git">Copy</button>
+        </div>
+        <div class="download-actions">
+          <a class="btn btn-primary btn-lg" href="https://github.com/lsudigitaltwinninglab/agreaux" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.5 2 2 6.6 2 12.3c0 4.5 2.9 8.3 6.8 9.7.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .8.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 22 12.3C22 6.6 17.5 2 12 2z"/></svg>
+            View on GitHub
+          </a>
+          <a class="btn btn-ghost btn-lg" href="docs.html#get-started">Quick start</a>
+        </div>
+        <p class="license-note">Open-source · License to be announced</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section" id="about">
+    <div class="container about-inner">
+      <div class="section-head">
+        <span class="eyebrow">About the project</span>
+        <h2>Game-industry tools, industrial-grade results</h2>
+        <p>Agreaux was built on a simple idea: the entertainment industry has spent decades perfecting
+          fast, cheap workflows for building photoreal interactive worlds — so why not apply them to
+          heavy industry? By pairing consumer hardware with free, open-source software and talent
+          trained in 3D modeling and game development, the framework produces digital twins suitable
+          for industrial visualization, training and review at a fraction of the traditional cost. The
+          reference build digitizes the LSU distillation columns as an accessible, reproducible demo of
+          the whole pipeline.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span class="brand-name">Agr<span>eaux</span></span>
+        </a>
+        <p>An open-source framework for low-cost industrial digital twins, by the LSU Digital Twinning Lab.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="#features">Features</a>
+          <a href="#capture">Site capture</a>
+          <a href="#pipeline">Pipeline</a>
+          <a href="#download">Download</a>
+        </div>
+        <div class="footer-col">
+          <h4>Docs</h4>
+          <a href="docs.html#overview">Overview</a>
+          <a href="docs.html#architecture">Architecture</a>
+          <a href="docs.html#modeling">Modeling</a>
+          <a href="docs.html#xr">XR &amp; features</a>
+        </div>
+        <div class="footer-col">
+          <h4>Project</h4>
+          <a href="https://github.com/lsudigitaltwinninglab/agreaux" target="_blank" rel="noopener">GitHub</a>
+          <a href="#about">About</a>
+          <a href="docs.html#faq">FAQ</a>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>© <span id="year"></span> Agreaux · LSU Digital Twinning Lab.</span>
+      <span>Made by digital artists &amp; engineers.</span>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+# Local reference material — not part of the published site
+proposal-docs/
+github-repo/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db

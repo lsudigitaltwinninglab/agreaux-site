@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation — Agreaux</title>
+  <meta name="description" content="Agreaux documentation: overview, architecture diagrams, capture, modeling and XR features for the open-source digital twin framework." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+</head>
+<body class="docs-body">
+  <!-- Navbar -->
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">Agr<span>eaux</span></span>
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html#features">Features</a>
+        <a href="index.html#pipeline">Pipeline</a>
+        <a href="docs.html" class="active">Docs</a>
+        <a class="btn btn-ghost" href="https://github.com/lsudigitaltwinninglab/agreaux" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-primary" href="index.html#download">Download</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="docs-layout container">
+    <!-- Sidebar -->
+    <aside class="docs-sidebar" id="docsSidebar">
+      <nav>
+        <p class="side-group">Overview</p>
+        <a href="#overview" class="side-link">Introduction</a>
+        <a href="#get-started" class="side-link">Quick start</a>
+        <a href="#architecture" class="side-link">Architecture</a>
+
+        <p class="side-group">Pipeline</p>
+        <a href="#capture" class="side-link">Capture &amp; registration</a>
+        <a href="#modeling" class="side-link">Modeling in Blender</a>
+        <a href="#export" class="side-link">Blender → Godot</a>
+        <a href="#xr" class="side-link">Godot &amp; XR</a>
+
+        <p class="side-group">Features</p>
+        <a href="#multiplayer" class="side-link">Multiplayer &amp; QR anchors</a>
+        <a href="#pid" class="side-link">P&amp;ID &amp; interactions</a>
+        <a href="#team" class="side-link">Team workflow</a>
+
+        <p class="side-group">More</p>
+        <a href="#repo" class="side-link">Repo structure</a>
+        <a href="#faq" class="side-link">FAQ</a>
+        <a href="#credits" class="side-link">Credits &amp; license</a>
+      </nav>
+    </aside>
+
+    <!-- Content -->
+    <main class="docs-content">
+      <div class="docs-breadcrumb"><a href="index.html">Home</a> / <span>Documentation</span></div>
+
+      <section id="overview" class="doc-section">
+        <h1>Agreaux Documentation</h1>
+        <p class="lead">A simplified, accessible pipeline for building and deploying digital twins with
+          open-source software — modelled in Blender, experienced in VR/AR through Godot.</p>
+        <p>Agreaux reframes digital-twin development as an approachable, reproducible system. The
+          reference build presents the <strong>LSU distillation columns</strong> as an interactive
+          VR/AR twin, demonstrating the whole workflow end-to-end. These docs are an
+          <strong>overview</strong> of how the pieces fit together — the in-repo guides cover the
+          step-by-step detail.</p>
+        <div class="callout">
+          <strong>Looking for the code?</strong> Everything lives in the
+          <a href="https://github.com/lsudigitaltwinninglab/agreaux" target="_blank" rel="noopener">GitHub repository</a>.
+          Jump to <a href="#get-started">Quick start</a> to run it.
+        </div>
+      </section>
+
+      <section id="get-started" class="doc-section">
+        <h2>Quick start</h2>
+        <p>The repository contains a complete Godot 4.6 project plus the Blender add-ons. To run the
+          demo twin:</p>
+        <div class="code-block">
+          <code><span class="c-comment"># 1 · Clone the repository</span><br />
+          git clone https://github.com/lsudigitaltwinninglab/agreaux.git</code>
+          <button class="copy-btn" data-copy="git clone https://github.com/lsudigitaltwinninglab/agreaux.git">Copy</button>
+        </div>
+        <ol class="doc-list ordered">
+          <li>Install <strong>Godot 4.6</strong> (the engine with Mobile/OpenXR support).</li>
+          <li>Open the project — point Godot at the cloned folder and let it import.</li>
+          <li>Press play to explore on desktop, or deploy to a <strong>Meta Quest 3</strong> for VR/AR.</li>
+          <li>For modeling, install the <strong>Point Cloud Visualizer</strong> and <strong>Plant
+            Modeling Tools</strong> add-ons in Blender.</li>
+        </ol>
+        <div class="callout callout-warn">
+          <strong>Tip:</strong> Use the official Blender build from blender.org — sandboxed installs
+          (e.g. Linux Snap/Flatpak) can cause glTF export incompatibilities.
+        </div>
+      </section>
+
+      <section id="architecture" class="doc-section">
+        <h2>Architecture</h2>
+        <p>Agreaux is a modular pipeline. Each stage uses free, open-source tools and hands a clean
+          artifact to the next — from raw scans all the way to an interactive XR application.</p>
+        <pre class="mermaid">
+flowchart LR
+  subgraph CAP["Capture"]
+    A1[Low-cost LiDAR scan]
+    A2[Photogrammetry / camera]
+  end
+  subgraph REG["Register"]
+    B1[CloudCompare / RealityScan]
+    B2[Scaled point cloud]
+  end
+  subgraph MOD["Model — Blender"]
+    C1[Point Cloud Visualizer]
+    C2[Plant Modeling Tools]
+    C3[Geometry Nodes + Asset Library]
+  end
+  subgraph ENG["Engine — Godot 4.6"]
+    D1[glTF / .blend import]
+    D2[XR + Multiplayer + UI]
+  end
+  XR[[VR / AR / Toy-model<br/>on Meta Quest 3]]
+
+  A1 --> B1
+  A2 --> B1
+  B1 --> B2 --> C1
+  C1 --> C2 --> C3 --> D1 --> D2 --> XR
+        </pre>
+        <p>The point cloud is the <strong>spatial ground truth</strong>: models are built 1:1 over it
+          so the digital twin matches the real facility's dimensions.</p>
+      </section>
+
+      <section id="capture" class="doc-section">
+        <h2>Capture &amp; registration</h2>
+        <p>Capture combines an accurate LiDAR reference with high-detail photography, then registers
+          everything into a single scaled point cloud.</p>
+        <ul class="doc-list">
+          <li><strong>Low-cost LiDAR scanners</strong> — affordable handhelds like the Eagle scanner give a true 1:1 laser reference; the framework isn't picky about the device.</li>
+          <li><strong>Photogrammetry</strong> from any camera (including a phone) adds detail — but must be scaled/aligned, since photogrammetry clouds aren't inherently to scale.</li>
+          <li><strong>CloudCompare / RealityScan</strong> line up overlapping registrations and export the merged point cloud.</li>
+          <li><strong>Control points</strong> — 3+ shared, easily-referable points (sharp corners work well) improve orientation, mapping and scale.</li>
+        </ul>
+        <p>What carries into Blender for modeling: the point cloud(s), the diagram/blueprint layout, and
+          camera positions (imported as FBX via Plant Modeling Tools).</p>
+
+        <figure class="doc-figure">
+          <img src="assets/img/docs/blender-pointcloud.png" alt="A multi-million-point scan of an industrial unit loaded in Blender with the Point Cloud Visualizer add-on" loading="lazy" />
+          <figcaption>A registered scan of an industrial unit (tens of millions of points) loaded in Blender via the Point Cloud Visualizer add-on — the spatial reference everything is modeled over.</figcaption>
+        </figure>
+      </section>
+
+      <section id="modeling" class="doc-section">
+        <h2>Modeling in Blender</h2>
+        <p>In Blender, the facility is rebuilt as clean, optimized, game-ready geometry on top of the
+          reference cloud — using two custom add-ons and procedural Geometry Nodes.</p>
+        <div class="feature-pills">
+          <span class="pill">Point Cloud Visualizer</span>
+          <span class="pill">Plant Modeling Tools</span>
+          <span class="pill">Geometry Nodes</span>
+          <span class="pill">Asset Library</span>
+          <span class="pill">Linking / Append</span>
+        </div>
+        <h3>Add-ons</h3>
+        <ul class="doc-list">
+          <li><strong>Point Cloud Visualizer</strong> — loads the scaled point cloud as a modeling guide so the model stays 1:1 with reality.</li>
+          <li><strong>Plant Modeling Tools</strong> — imports aligned camera positions and corrected photos for accurate reference while modeling.</li>
+          <li><strong>Geometry Nodes</strong> — procedural piping, cables and beams that export as instances, keeping the scene efficient for real-time engines.</li>
+        </ul>
+
+        <h3>Loading a point cloud</h3>
+        <p>Both add-ons install from <strong>Edit → Preferences → Add-ons → Install from Disk</strong>
+          (point it at the downloaded <code>.zip</code>). To bring a cloud in:</p>
+        <ol class="doc-list ordered">
+          <li>Clear the scene and add an <strong>Empty</strong> — the point cloud attaches to it.</li>
+          <li>With the Empty selected, open the sidebar (<code>N</code>) → <strong>Point Cloud Visualizer</strong> → load the <code>.ply</code> from disk and press <strong>Draw</strong>.</li>
+          <li>The cloud isn't saved inside the <code>.blend</code>, so re-draw it after reopening the file.</li>
+        </ol>
+        <div class="doc-figrow">
+          <figure class="doc-figure">
+            <img src="assets/img/docs/pointcloud-align.png" alt="Top orthographic view of a point cloud offset from the world origin" loading="lazy" />
+            <figcaption>Clouds often land off the world origin — re-center to the Empty so dimensions stay correct.</figcaption>
+          </figure>
+          <figure class="doc-figure">
+            <img src="assets/img/docs/asset-library.png" alt="Blender Asset Browser with a parametric Geometry Nodes valve asset" loading="lazy" />
+            <figcaption>Shared assets in the Asset Browser — here a parametric Geometry Nodes valve whose flanges, ball size and spacing are adjustable.</figcaption>
+          </figure>
+        </div>
+
+        <h3>Conventions</h3>
+        <ul class="doc-list">
+          <li>Keep poly counts low and rely on <strong>instancing</strong> for repeated elements.</li>
+          <li>Share materials and common objects through the <strong>Asset Library</strong> so the whole team stays consistent.</li>
+          <li>Link key collections from individual files into a <strong>master file</strong> for assembly (see <a href="#team">Team workflow</a>).</li>
+          <li>Keep the model clean and well-labeled — assets searchable by name, grouped by type/area for toggling.</li>
+        </ul>
+      </section>
+
+      <section id="export" class="doc-section">
+        <h2>Blender → Godot</h2>
+        <p>Godot accepts several 3D formats; Agreaux favors <strong>glTF 2.0 (.glb)</strong> or working
+          directly from <strong>.blend</strong> files (Godot calls Blender's glTF exporter, so saved
+          changes flow through and play well with version control).</p>
+        <ul class="doc-list">
+          <li><strong>Name suffixes</strong> — e.g. <code>-col</code> adds collision to a mesh; <code>-noimp</code> excludes it from import.</li>
+          <li><strong>Low-poly + collision</strong> — ship a low-poly mesh for collision and a high-poly mesh for visuals; generating collision from dense geometry is too heavy.</li>
+          <li><strong>Draco compression</strong> — great for file size, but skip it where every vertex matters; realize instances and apply geometry-node modifiers before export.</li>
+        </ul>
+        <div class="callout">
+          Blender 3.5+ exports glTF reliably. Keep export settings consistent (transform/axis, instances,
+          applied modifiers, UVs, normals) so models land correctly in Godot.
+        </div>
+
+        <div class="doc-figrow">
+          <figure class="doc-figure">
+            <img src="assets/img/docs/gltf-export.png" alt="Blender glTF 2.0 export dialog with +Y Up, Geometry Nodes instances and Draco compression options" loading="lazy" />
+            <figcaption>Blender's glTF 2.0 export — enable <code>+Y&nbsp;Up</code>, Geometry Nodes/GPU instances, applied modifiers, and Draco compression where appropriate.</figcaption>
+          </figure>
+          <figure class="doc-figure">
+            <img src="assets/img/docs/godot-import.png" alt="Imported model inside the Godot editor with XR nodes and the Make Local context menu" loading="lazy" />
+            <figcaption>The imported model in the Godot scene alongside the XR rig — choosing <strong>Make Local</strong> lets you edit the instanced model directly in Godot.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="xr" class="doc-section">
+        <h2>Godot &amp; XR</h2>
+        <p>The interactive twin is a <strong>Godot 4.6</strong> project targeting <strong>Meta Quest
+          3</strong> via OpenXR, built on Godot XR Tools and the Godot Meta Toolkit.</p>
+        <h3>Display modes</h3>
+        <p>The XR environment blend mode (Project Settings → XR) switches how the virtual world mixes
+          with reality:</p>
+        <ul class="doc-list">
+          <li><strong>Opaque</strong> — full VR; the render is presented fully opaque.</li>
+          <li><strong>Additive</strong> — AR where blending isn't controlled (e.g. additive optical displays).</li>
+          <li><strong>Alpha</strong> — true AR passthrough; combine with a transparent viewport so the alpha channel decides what's visible.</li>
+        </ul>
+        <h3>Toolkit</h3>
+        <div class="feature-pills">
+          <span class="pill">godot-xr-tools</span>
+          <span class="pill">godot_meta_toolkit</span>
+          <span class="pill">godotopenxrvendors</span>
+          <span class="pill">godot-xr-avatar</span>
+          <span class="pill">Meta XR Simulator</span>
+        </div>
+        <p>The Meta XR Simulator lets you test XR interactions on desktop without putting on a headset
+          for every change.</p>
+
+        <figure class="doc-figure">
+          <img src="assets/img/docs/meta-xr-sim.png" alt="The modeled industrial unit running in the Meta XR Simulator with tracked hands" loading="lazy" />
+          <figcaption>The twin running in the Meta XR Simulator — hand tracking and the modeled steel structure render on desktop, no headset required for iteration.</figcaption>
+        </figure>
+      </section>
+
+      <section id="multiplayer" class="doc-section">
+        <h2>Multiplayer &amp; QR anchors</h2>
+        <p>Multiple users share one session over Godot's high-level multiplayer (ENet). A host machine
+          authors the truth and synchronizes state to clients via <strong>RPCs</strong>. A QR-code
+          spatial anchor aligns everyone's model to the same physical spot.</p>
+
+        <h3>Connection flow</h3>
+        <pre class="mermaid">
+flowchart TD
+  S[AutoLoad detects headset] -->|VR| V[Load VR scene]
+  S -->|no headset| D[Load desktop scene]
+  V --> L[2D lobby]
+  D --> L
+  L -->|Host| H["create_server() → load arena"]
+  L -->|Join| C["create_client() → load arena"]
+  H --> M[Multiplayer scene base]
+  C --> M
+  M --> P[Peers exchange avatars + state via RPC]
+        </pre>
+
+        <h3>QR spatial-anchor sync</h3>
+        <pre class="mermaid">
+flowchart LR
+  Q[Quest camera reads QR] --> T[OpenXR marker tracker]
+  T --> X[XRServer emits tracker_added]
+  X --> MM[QR marker manager]
+  MM --> AN[XRAnchor3D tracks pose]
+  AN --> SM[Model sync manager]
+  SM -->|RPC to all peers| ALL[Everyone shares one aligned model]
+        </pre>
+        <p>Spatial anchors let the model stay locked to the real room, and the same anchor keeps every
+          co-located participant's view aligned. RPCs also sync avatars, anchor mode, scale and menu
+          state so the scene stays consistent across peers.</p>
+      </section>
+
+      <section id="pid" class="doc-section">
+        <h2>P&amp;ID &amp; interactions</h2>
+        <p>The twin is interactive, with tools aimed at review and training.</p>
+        <ul class="doc-list">
+          <li><strong>P&amp;ID with pointers</strong> — display diagrams in-world; pointer hotspots reveal linked metadata and highlight matching equipment.</li>
+          <li><strong>Toy-model mode</strong> — shrink the whole unit onto a tabletop, or expand back to 1:1.</li>
+          <li><strong>Movement</strong> — walkable ramps and ladder movement to traverse the unit naturally.</li>
+          <li><strong>Drawing</strong> — sketch annotations and comments directly in 3D space.</li>
+          <li><strong>Metadata</strong> — a metadata manager surfaces equipment info on point-and-click.</li>
+        </ul>
+      </section>
+
+      <section id="team" class="doc-section">
+        <h2>Team workflow</h2>
+        <p>Agreaux is built for small teams working in parallel. Source control plus Blender's linking
+          and asset systems keep everyone consistent.</p>
+        <pre class="mermaid">
+flowchart TD
+  PV[Perforce — source control]
+  PV --> IF[Individual .blend files]
+  IF --> AL[Shared Asset Library<br/>materials + common objects]
+  AL --> GN[Geometry-node assets]
+  IF -->|link main collections| MF[Master .blend file]
+  GN --> MF
+  MF -->|export glTF / .blend| GD[Godot project on GitHub]
+        </pre>
+        <ul class="doc-list">
+          <li><strong>Perforce</strong> handles large binary Blender files and shared access.</li>
+          <li><strong>Asset Library</strong> shares materials and common objects so the model stays uniform.</li>
+          <li><strong>Linking</strong> assembles individual files into a master file without duplicating data.</li>
+          <li>The <strong>Godot</strong> side lives on GitHub for code-friendly version control.</li>
+        </ul>
+
+        <figure class="doc-figure">
+          <img src="assets/img/docs/asset-standards.png" alt="Standardized size chart for pipes, flanges and screws used across the asset library" loading="lazy" />
+          <figcaption>Standardized component sizing (pipes, flanges, screws) keeps shared assets consistent so any modeler's parts fit the same master assembly.</figcaption>
+        </figure>
+      </section>
+
+      <section id="repo" class="doc-section">
+        <h2>Repo structure</h2>
+        <p>A high-level look at what's in the repository:</p>
+        <ul class="doc-list">
+          <li><code>addons/</code> — Godot plugins (XR Tools, Meta Toolkit, OpenXR vendors, XR avatar, LAN discovery).</li>
+          <li><code>scripts/</code> — gameplay &amp; feature logic (metadata, P&amp;ID, toy-model, world scale, movement).</li>
+          <li><code>scenes/</code>, <code>ui/</code>, <code>instances/</code> — scene composition, interface and reusable nodes.</li>
+          <li><code>BlenderImports/</code> — model imports from the Blender pipeline.</li>
+          <li><code>docs/</code> — in-repo notes (e.g. iOS/XR transferability).</li>
+          <li><code>*.tscn</code> — entry scenes such as the AR multiplayer setup and P&amp;ID drawings.</li>
+        </ul>
+      </section>
+
+      <section id="faq" class="doc-section">
+        <h2>FAQ</h2>
+        <div class="faq-item"><h3>Do I need expensive scanning equipment?</h3>
+          <p>No. The framework is built around low-cost LiDAR scanners — affordable handhelds like the
+            Eagle scanner — and detail can be filled in with photogrammetry from any camera, even a phone.</p></div>
+        <div class="faq-item"><h3>Is the toolchain really open-source?</h3>
+          <p>The core — Blender, Godot, CloudCompare, OpenXR — is free and open-source. The licensing
+            for Agreaux itself is still being finalized.</p></div>
+        <div class="faq-item"><h3>Which headset is supported?</h3>
+          <p>The reference build targets the Meta Quest 3 via OpenXR. XR Tools abstractions can port to
+            other OpenXR devices with some platform-specific adjustments.</p></div>
+        <div class="faq-item"><h3>What engine version do I need?</h3>
+          <p>Godot 4.6 (with Mobile/OpenXR support). For modeling, Blender 3.5+ from blender.org.</p></div>
+      </section>
+
+      <section id="credits" class="doc-section">
+        <h2>Credits &amp; license</h2>
+        <p>Agreaux is developed by the <strong>LSU Digital Twinning Lab</strong> within the Digital
+          Media Arts &amp; Engineering program, with student researchers driving asset production, XR
+          development, interaction design and documentation.</p>
+        <p>Agreaux is an open-source project. The specific license structure is still being decided —
+          details will be announced here once finalized.</p>
+        <a class="btn btn-primary" href="https://github.com/lsudigitaltwinninglab/agreaux" target="_blank" rel="noopener">Open the repository
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
+        </a>
+      </section>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer-bottom only-bottom">
+      <span>© <span id="year"></span> Agreaux · LSU Digital Twinning Lab.</span>
+      <a href="index.html">Back to home</a>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      themeVariables: {
+        background: "#0e131d",
+        primaryColor: "#121826",
+        primaryTextColor: "#e7ecf5",
+        primaryBorderColor: "#34e0c4",
+        lineColor: "#4f8cff",
+        secondaryColor: "#161d2e",
+        tertiaryColor: "#0e131d",
+        fontFamily: "Inter, system-ui, sans-serif",
+        clusterBkg: "#0e131d",
+        clusterBorder: "#222c40"
+      }
+    });
+  </script>
+</body>
+</html>
